@@ -86,6 +86,35 @@ class TwitterService {
         return count
     }
 
+    public int getAllTweetsFromHashTag(String hashTag, String fileName){
+        int count = 0
+        def Query query = new Query("#" + hashTag)
+        long lastId = Long.MAX_VALUE
+        int maxTweets = 1000
+
+        new File(fileName).withWriter {out ->
+            while (true) {
+                log.info("Got $count tweets of $hashTag ")
+                checkRateLimit(true)
+                query.setCount(100)
+                def QueryResult statuses = twitter.search(query)
+                if (statuses == null || statuses.getTweets().size() == 0 || count > maxTweets) {
+                    log.info("End")
+                    break
+                }
+                statuses.getTweets().collect{Status s ->
+                    out.println(TwitterObjectFactory.getRawJSON(s))
+                    if(s.getId() < lastId) lastId = s.getId();
+                    count++
+                }
+                query.setMaxId(lastId - 1)
+                println(count)
+            }
+        }
+
+        return count
+    }
+
     def synchronized indexAllTweets(String username){
         def paging = new Paging(1, 200)
         int count = 0
