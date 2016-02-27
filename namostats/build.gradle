@@ -60,6 +60,10 @@ dependencies {
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+
+    ## Added for application
+    compile "org.twitter4j:twitter4j-core:4.0.4"
+    compile 'org.apache.solr:solr-solrj:4.10.4'
 }
 
 task wrapper(type: Wrapper) {
