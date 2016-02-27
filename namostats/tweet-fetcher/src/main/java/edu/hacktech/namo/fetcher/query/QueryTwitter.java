@@ -48,9 +48,9 @@ public class QueryTwitter {
 		return timeLine;
 	}
 
-	public void getTweetsFromProfileUsingSearch(String tweeple) throws Exception {
+	public void getTweetsUsingSearch(String keyword) throws Exception {
 		QueryTwitter query = new QueryTwitter();
-		Query q = new Query("@" + tweeple);
+		Query q = new Query(keyword);
 		q.setCount(100);
 		q.setSinceId(0);
 		q.setResultType(Query.ResultType.popular);
@@ -68,14 +68,16 @@ public class QueryTwitter {
 			// result.getRateLimitStatus();
 			int writeCount = 0;
 			for (Status s : statuses) {
-				if (s.getUser().getScreenName().trim().equals(tweeple)) {
+				
+/*				if (s.getUser().getScreenName().trim().equals(tweeple)) {
 					writeCount++;
-					query.write(tweeple + ".json", TwitterObjectFactory.getRawJSON(s), true);
+					query.write(tweeple+"-search" + ".json", TwitterObjectFactory.getRawJSON(s), true);
 				} else {
 					System.err.println(s.getUser().getScreenName());
 					System.out.println(TwitterObjectFactory.getRawJSON(s));
-				}
+				} */
 				// print(s.user.id + "::" + s.createdAt + " :: " + s.text)
+				query.write(keyword+"-search" + ".json", TwitterObjectFactory.getRawJSON(s), true);
 				count++;
 			}
 			System.out.println("Written " + writeCount);
@@ -88,7 +90,7 @@ public class QueryTwitter {
 				System.out.println("going to sleep for " + rLimit.getSecondsUntilReset());
 				Thread.sleep(1000 * (rLimit.getSecondsUntilReset() + 1));
 			}
-			// if(1==1) throw new RuntimeException("FUNNY");
+			//if(1==1) throw new RuntimeException("FUNNY");
 			q.setMaxId(statuses.get(statuses.size() - 1).getId());
 			q.setCount(100);
 			q.setSinceId(0);
@@ -164,8 +166,8 @@ public class QueryTwitter {
 
 	}
 	/*
-		HillaryClinton
-		SenSanders
+		HillaryClinton	@
+		SenSanders		@
 		
 		realDonaldTrump
 		tedcruz
@@ -173,8 +175,9 @@ public class QueryTwitter {
 		JohnKasich
 		RealBenCarson
 		
-		gov
-		elect2016 
+			from:
+		gov			
+		elect2016 	
 		CNNPolitics
 		HuffPostPol
 		foxnewspolitics
@@ -183,10 +186,10 @@ public class QueryTwitter {
 		QueryTwitter query = new QueryTwitter();
 		// System.err.println(query.getProfile("HillaryClinton"));
 
-		String candidate = "nytpolitics";
+		String candidate = "SenSanders";
 		
-		//query.getTweetsFromProfileUsingSearch(candidate);
-		query.storeTweetsFromProfile(candidate);
+		query.getTweetsUsingSearch("@" + candidate);
+		//query.storeTweetsFromProfile(candidate);
 	}
 
 
