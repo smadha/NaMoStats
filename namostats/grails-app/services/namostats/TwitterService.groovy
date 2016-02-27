@@ -2,16 +2,17 @@ package namostats
 
 import grails.transaction.Transactional
 import namostats.model.PostBean
-import twitter4j.Paging
-import twitter4j.Status
-import twitter4j.Twitter
-import twitter4j.TwitterFactory
+import twitter4j.*
+import twitter4j.conf.ConfigurationBuilder
 
 @Transactional
 class TwitterService {
 
     def solrService
-    Twitter twitter = TwitterFactory.getSingleton()
+
+    Twitter twitter = new TwitterFactory(
+            new ConfigurationBuilder().setJSONStoreEnabled(true).build())
+            .getInstance()
 
     /**
      * Gets user profile from twitter
@@ -59,6 +60,30 @@ class TwitterService {
 
     private def checkRateLimit(boolean canWait) {
         //not implemented yet
+    }
+
+
+    public int saveAllTweets(String username, String fileName){
+        def paging = new Paging(1, 200)
+        int count = 0
+        new File(fileName).withWriter {out ->
+            while (true) {
+                log.info("Got $count tweets of $username, next page=$paging ")
+                checkRateLimit(true)
+                def statuses = twitter.getUserTimeline(username, paging)
+                if (statuses == null || statuses.empty) {
+                    log.info("End")
+                    break
+                }
+                statuses.collect{Status s ->
+                    out.println(TwitterObjectFactory.getRawJSON(s))
+                    count++
+                }
+                paging.page = paging.page + 1
+                println(count)
+            }
+        }
+        return count
     }
 
     def synchronized indexAllTweets(String username){
