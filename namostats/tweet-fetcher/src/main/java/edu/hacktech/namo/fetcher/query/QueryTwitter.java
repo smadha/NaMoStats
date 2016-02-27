@@ -1,5 +1,8 @@
 package edu.hacktech.namo.fetcher.query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 
 import twitter4j.*;
@@ -15,7 +18,7 @@ public class QueryTwitter {
 
 	public ResponseList<Status> getTweetsFromProfile(String tweeple, int start, int size) throws Exception {
 		ResponseList<Status> timeLine = twitter.getUserTimeline(tweeple, new Paging(start, size));
-		System.out.println(timeLine);
+		
 		return timeLine;
 	}
 
@@ -25,16 +28,34 @@ public class QueryTwitter {
 		// System.err.println(query.getProfile("HillaryClinton"));
 		int start = 1;
 		int size = 200;
+		int incr = size;
+		List<Status> allStatus = new ArrayList();
 		while (true) {
-			start += size;
-			ResponseList<Status> obj = query.getTweetsFromProfile("HillaryClinton", start, size);
-
-			if (obj == null) {
+			
+			ResponseList<Status> obj = null;
+			try {
+				obj = query.getTweetsFromProfile("HillaryClinton", start, size);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(start);
+				System.out.println(size);
+				String json = gson.toJson(allStatus);
+				System.err.println(json);
+			}
+			
+			start += incr;
+			size += incr;
+			
+			if (obj == null || obj.size()==0) {
+				System.out.println(start);
+				System.out.println(size);
+				String json = gson.toJson(allStatus);
+				System.err.println(json);
 				break;
 			}
+			allStatus.addAll(obj);
 			String json = gson.toJson(obj);
 			System.err.println(json);
-
 		}
 	}
 }
