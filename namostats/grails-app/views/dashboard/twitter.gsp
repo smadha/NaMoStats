@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: tg
-  Date: 11/26/15
-  Time: 11:54 AM
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -18,7 +11,7 @@
     <div class="form-group">
         <label for="userid">Twitter UserName</label>
         <input required="true" type="text" class="form-control" name="userid"
-               id="userid" placeholder="@thammegowda" value="${userid?:'@thammegowda'}">
+               id="userid" placeholder="@HillaryClinton" value="${userid?:'@HillaryClinton'}">
     </div>
     <g:actionSubmit value="Show Analytics" action="twitter"/>
     <g:actionSubmit value="Fetch Tweets (slow)" action="indexTwitterTimeline"/>

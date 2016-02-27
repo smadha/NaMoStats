@@ -92,8 +92,4 @@ class DashboardController {
         result = [children : result]
         render (result as JSON)
     }
-
-
-
-
 }

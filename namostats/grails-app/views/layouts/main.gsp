@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Timeline</a>
+                <a class="navbar-brand" href="#">Election 2016</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

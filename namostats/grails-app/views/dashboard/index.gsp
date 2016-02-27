@@ -13,10 +13,10 @@
 </head>
 
 <body>
-    <h2>Welcome to Timeline</h2>
-    <p>We are working to demonstrate timeline! Stay tuned and keep checking the constructed potions of this site</p>
+    <h2>Welcome to Election Trend Analysis</h2>
+    <p>We are working true demonstrate datascience for election 2016</p>
     <ul>
-        <g:link controller="dashboard" action="twitter">Twitter Timeline Analysis</g:link>
+        <g:link controller="dashboard" action="twitter">Twitter Analysis</g:link>
     </ul>
 
 </body>
