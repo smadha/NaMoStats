@@ -47,6 +47,14 @@ environments:
 
 ---
 ---
+
+solr:
+  postsUrl: 'http://ec2-54-200-205-158.us-west-2.compute.amazonaws.com:8983/solr/namostats'
+  usersUrl: 'http://ec2-54-200-205-158.us-west-2.compute.amazonaws.com:8983/solr/users'
+
+---
+
+---
 grails:
     profile: web
     codegen:
