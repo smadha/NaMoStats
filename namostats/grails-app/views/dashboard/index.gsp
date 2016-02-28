@@ -11,6 +11,10 @@
     <meta name="layout" content="main">
     <title>Dashboard</title>
   <asset:javascript src="application.js"/>
+  <asset:stylesheet src="application.css"/>
+  <link rel="stylesheet" type="text/css" href="/assets/jqcloud.css" />
+  
+  
   <script type="text/javascript" defer="defer">
 	window.twttr = (function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
