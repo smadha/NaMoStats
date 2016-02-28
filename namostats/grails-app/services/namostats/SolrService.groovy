@@ -133,6 +133,16 @@ class SolrService implements Closeable {
         return res.getBeans(PostBean.class)
     }
 
+    public getDateFacet(String query, Date start, Date end, String gap){
+        def qry = new SolrQuery(query)
+        qry.setRows(0)
+        qry.addDateRangeFacet("created", start, end, "+" + gap)
+        QueryResponse res = postsServer.query(qry)
+        return res.getFacetRanges()[0]?.counts?.collect { it ->
+            [date: it.value, count: it.count]
+        }
+    }
+
     @Override
     void close() throws IOException {
         if(postsServer) {

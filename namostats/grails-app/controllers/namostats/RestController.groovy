@@ -42,4 +42,27 @@ class RestController {
         def tweets = solrService.topTweets(params.userid, params.tag, params.start, params.rows, params.sortfield)
         render( tweets as JSON)
     }
+
+
+    def datefacets(){
+        try {
+            def q = params.q?:"*:*"
+            def start
+            if (params.start) {
+                start = new Date(Long.parseLong(params.start))
+            } else {
+                def cal = Calendar.getInstance()
+                cal.set(2015, 05, 01)
+                start = cal.time
+            }
+            def end = params.end ? new Date(Long.parseLong(params.end)) : new Date()
+            def gap = params.gap?: "7DAY"
+            def values = solrService.getDateFacet(q, start, end, gap)
+            render (values as JSON)
+        }catch (Exception e){
+            response.status = 400
+            render ([msg:e.getMessage()] as JSON)
+        }
+
+    }
 }
