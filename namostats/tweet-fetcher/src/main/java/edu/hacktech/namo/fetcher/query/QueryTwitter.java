@@ -48,13 +48,15 @@ public class QueryTwitter {
 		return timeLine;
 	}
 
-	public void getTweetsUsingSearch(String keyword) throws Exception {
+	public void getTweetsUsingSearch(String keyword, long maxId) throws Exception {
 		QueryTwitter query = new QueryTwitter();
 		Query q = new Query(keyword);
 		q.setCount(100);
 		q.setSinceId(0);
 		q.setResultType(Query.ResultType.popular);
-		// q.setMaxId(700225107239833600l);
+		if (maxId >= 0) {
+			q.setMaxId(maxId);
+		}
 		int count = 0;
 
 		while (true) {
@@ -79,6 +81,7 @@ public class QueryTwitter {
 				// print(s.user.id + "::" + s.createdAt + " :: " + s.text)
 				query.write(keyword+"-search" + ".json", TwitterObjectFactory.getRawJSON(s), true);
 				count++;
+				writeCount++;
 			}
 			System.out.println("Written " + writeCount);
 			System.out.println("Count = " + count);
@@ -104,8 +107,9 @@ public class QueryTwitter {
 		content+="\n";
 		FileOutputStream out = new FileOutputStream(fileName, isAppend);
 		out.write(content.getBytes());
+		out.write("\n".getBytes());
 		out.close();
-		System.out.println("Written " + fileName);
+		//System.out.println("Written " + fileName);
 	}
 
 	/**
@@ -128,10 +132,6 @@ public class QueryTwitter {
 	}
 
 	/**
-	 * @param query
-	 * @param start
-	 * @param size
-	 * @param allStatus
 	 * @param candidate
 	 * @return
 	 * @throws Exception
@@ -187,9 +187,10 @@ public class QueryTwitter {
 		QueryTwitter query = new QueryTwitter();
 		// System.err.println(query.getProfile("HillaryClinton"));
 
-		String candidate = "JohnKasich";
-		
-		query.getTweetsUsingSearch("@" + candidate);
+		String candidate = "marcorubio";
+
+		//query.getTweetsUsingSearch("@" + candidate, -1);
+		query.getTweetsUsingSearch("@" + candidate, -1);
 		//query.storeTweetsFromProfile(candidate);
 	}
 

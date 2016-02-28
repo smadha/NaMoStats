@@ -4,13 +4,13 @@ import twitter4j.TwitterObjectFactory
 
 tw = ctx.twitterService
 tc = tw.twitter
-Query q = new Query("#Decision2016")
+Query q = new Query("#GOPDebate")
 q.setCount(100)
 q.setSinceId(0)
 q.setResultType(Query.ResultType.recent)
-q.setMaxId(700225107239833600)
+//q.setMaxId()
 int count = 0
-new File("decision2016-2.txt").withWriter {out ->
+new File("gopdebate-1.txt").withWriter {out ->
     while (true) {
 
         QueryResult result = tc.search(q)
@@ -36,7 +36,7 @@ new File("decision2016-2.txt").withWriter {out ->
         q.setCount(100)
         q.setSinceId(0)
         q.setResultType(Query.ResultType.recent)
-        Thread.sleep(2000)
+        Thread.sleep(3000)
     }
 
 }

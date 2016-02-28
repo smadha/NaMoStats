@@ -10,8 +10,6 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.util.CoreMap;
 import edu.stanford.nlp.util.Generics;
 import edu.stanford.nlp.util.Triple;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +27,9 @@ import java.util.Properties;
 public class NlpPipeline {
 
     public static final String POS = "Positive";
+    public static final String VERY_POS = "Very Positive";
     public static final String NEG = "Negative";
+    public static final String VERY_NEG = "Very Negative";
     public static final String NEU = "Neutral";
     public static final String MIX = "Mixed";
     private StanfordCoreNLP tokenizer;
@@ -103,6 +103,9 @@ public class NlpPipeline {
         int count = 0;
         for (String field : classes) {
             switch (field){
+                case VERY_POS:
+                    count += 2;
+                    break;
                 case POS:
                     count += 1;
                     break;
@@ -112,18 +115,24 @@ public class NlpPipeline {
                 case NEG:
                     count -= 1;
                     break;
+                case VERY_NEG:
+                    count -= 2;
+                    break;
                 default:
                     throw new RuntimeException( field + " -- WTH ?");
             }
         }
         double avg = 1.0 * count / counts.size();
-        if (avg < 0.50 && avg > -0.50){
-            /// mixed
+        if (avg < -1.000) {
+            return VERY_NEG;
+        } else if (avg <= -0.50){
+            return NEG;
+        } else if (avg < 0.50) {
             return MIX;
-        } else if (avg >= 0.50){
+        } else if (avg <= 1.000){
             return POS;
         } else {
-            return NEG;
+            return VERY_POS;
         }
     }
 
