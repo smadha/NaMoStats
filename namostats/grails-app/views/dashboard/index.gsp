@@ -43,7 +43,7 @@
 <div class="container-fluid">
     <div class="content">
         <div class="row seven-cols">
-        <h1><small>#Candidates<small></h1>
+        <h1><small><a name="Candidates">#Candidates</a><small></h1>
 
             <g:each in="${solrService.getCandidates()}" var="c">
 
@@ -78,7 +78,7 @@
 
         <!-- Twitter Handles -->
         <div class="row">
-        <h1><small>#Live Tweets<small></h1>
+        <h1><a name="Live"><small>#Live Tweets<small></a></h1>
             <div class="col-md-6">
                 <a class="twitter-timeline" href="https://twitter.com/hashtag/gopdebate" data-widget-id="703942429817221120">#gopdebate Tweets</a>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -90,7 +90,7 @@
         </div>
 
         <div class="row">
-            <h1><small>#Temporal trend<small></h1>
+            <h1><a name="Temporal"><small>#Temporal trend<small></a></h1>
             <g:render template="temporal_multiline"
                       model="${[chartid:'multiline-time-chart', 'title':'Temporal Trend']}"/>
         </div>
@@ -98,7 +98,7 @@
         <!-- Word Cloud -->
         <div class="row">
             <div class="col-md-6">
-            <h1><small>What's being talked about?<small></h1>
+            <h1><a name="Trends"><small>What's being talked about?<small></a></h1>
                 <g:render template="wordcloud_chart"
                           model="${[chartid:'main-wordcloud-chart', 'title':'Word Cloud']}"/>
             </div>
@@ -107,7 +107,7 @@
                 
             </div>
         </div>
-
+<p>/<p>
 
     </div>
 </div>

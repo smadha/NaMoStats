@@ -8,17 +8,22 @@
 </head>
 <body>
 <div class="container-fluid">
-    <nav class="navbar navbar-default">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Election 2016</a>
+                <a class="navbar-brand" href="/dashboard#">Election 2016</a>
             </div>
-
-
+			<div id="navbar" class="navbar-collapse collapse">
+          	<ul class="nav navbar-nav">
+            	<li class="active"><a class="navbar-brand" href="/dashboard#Candidates">Candidates</a></li>
+            	<li><a class="navbar-brand" href="/dashboard#Live">Live</a></li>
+            	<li><a class="navbar-brand" href="/dashboard#Temporal">Temporal</a></li>
+            	<li><a class="navbar-brand" href="/dashboard#Trends">Trends</a></li>
+          	</ul>
+        	</div>
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="content">
+    <div class="content" style="margin-top: 23px;">
         <g:layoutBody/>
     </div>
 </div>
