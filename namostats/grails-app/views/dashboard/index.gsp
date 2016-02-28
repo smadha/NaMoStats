@@ -41,6 +41,7 @@
 
 <body>
 <div class="container-fluid">
+
     <div class="content">
         <div class="row seven-cols">
         <h1><a name="Candidates"><small>#Candidates<small></a></h1>
@@ -54,10 +55,13 @@
 
                              class="profile-image">
                     </div>
+                    <a href="http://localhost:8080/profile?userid=${c.userid}" class="profile-link">
                     <div class="row margin-2">
                         <h3>${c.username}</h3>
+                        <h4>${c.userid}</h4>
                         ${c.content}
                     </div>
+                    </a>
                     <div class="row bottom">
                         <div class="col-md-5">
                             <span class="twitter-jargons">Tweets</span><br />
@@ -113,6 +117,7 @@
 <p>/<p>
 
     </div>
+
 </div>
 
 
