@@ -42,8 +42,11 @@
 	text-align: center !important;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-decoration: underline;
+	font-size: 12px;
 }
-
+.number{
+	font-size: 12px;
+}
 .wrapper {
 	position: relative;
 }

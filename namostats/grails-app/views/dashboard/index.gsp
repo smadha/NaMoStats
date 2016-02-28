@@ -43,7 +43,7 @@
 <div class="container-fluid">
     <div class="content">
         <div class="row seven-cols">
-        <h1><small><a name="Candidates">#Candidates</a><small></h1>
+        <h1><a name="Candidates"><small>#Candidates<small></a></h1>
 
             <g:each in="${solrService.getCandidates()}" var="c">
 
@@ -61,11 +61,11 @@
                     <div class="row bottom">
                         <div class="col-md-5">
                             <span class="twitter-jargons">Tweets</span><br />
-                            <b>${c.statusescount}</b>
+                            <b class="number">${formatNumber(number:c.statusescount, locale: Locale.ENGLISH, format: '###,##0')}</b>
                         </div>
                         <div class="col-md-7">
                             <span class="twitter-jargons">Followers</span><br />
-                            <b>${c.followerscount}</b>
+                            <b class="number">${formatNumber(number:c.followerscount, locale: Locale.ENGLISH, format: '###,##0')}</b>
                         </div>
 
                     </div>
@@ -104,7 +104,10 @@
             </div>
             <div class="col-md-6">
             <h1><small>Where are Tweets coming from?<small></h1>
-                
+            <div>
+                <g:render template="google_map_chart"
+                          model="${[chartid:'main-map-chart', 'title':'World map']}"/>
+                          </div>
             </div>
         </div>
 <p>/<p>
