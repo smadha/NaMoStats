@@ -68,7 +68,7 @@ public class QueryTwitter {
 				break;
 			}
 			// result.getRateLimitStatus();
-			int writeCount = 0;
+			
 			for (Status s : statuses) {
 				
 /*				if (s.getUser().getScreenName().trim().equals(tweeple)) {
@@ -81,9 +81,8 @@ public class QueryTwitter {
 				// print(s.user.id + "::" + s.createdAt + " :: " + s.text)
 				query.write(keyword+"-search" + ".json", TwitterObjectFactory.getRawJSON(s), true);
 				count++;
-				writeCount++;
 			}
-			System.out.println("Written " + writeCount);
+			
 			System.out.println("Count = " + count);
 			RateLimitStatus rLimit = result.getRateLimitStatus();
 			System.out.println("Remaining " + rLimit.getRemaining() + ", resets in " + rLimit.getResetTimeInSeconds() + " Reset: "
@@ -191,6 +190,7 @@ public class QueryTwitter {
 
 		//query.getTweetsUsingSearch("@" + candidate, -1);
 		query.getTweetsUsingSearch("@" + candidate, -1);
+
 		//query.storeTweetsFromProfile(candidate);
 	}
 
