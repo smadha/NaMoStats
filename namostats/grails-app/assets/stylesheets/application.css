@@ -32,6 +32,13 @@
 	margin-left: 5%;
 }
 
+.profile-image-ind {
+	width: 200px;
+	height: 200px;
+	margin-top: 5%;
+	margin-left: 5%;
+}
+
 .margin-2 {
 	margin: 2px;
 }
@@ -53,7 +60,7 @@
 
 .bottom {
 	position: absolute;
-	bottom: 0;
+	bottom: 5px;
 }
 @media (min-width: 1200px) {
   .seven-cols .col-md-1,

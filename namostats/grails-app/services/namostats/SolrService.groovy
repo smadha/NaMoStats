@@ -78,7 +78,7 @@ class SolrService implements Closeable {
 
     public getCandidate(String candidateId){
         log.info("Get Candidate $candidateId")
-        def qry = new SolrQuery("userid:${ClientUtils.escapeQueryChars(candidateId)}")
+        def qry = new SolrQuery("type:profile AND userid:${ClientUtils.escapeQueryChars(candidateId)}")
         QueryResponse res = postsServer.query(qry)
         if (res.getResults().numFound >= 1) {
             def prof = res.getBeans(PersonBean.class)[0]

@@ -9,7 +9,7 @@
 		};
 		var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 		$.ajax({
-		'url' : "http://localhost:8080/rest/boundingbox",
+		'url' : "/rest/boundingbox?userid=${params.userid}",
 		'success' : function(data) {
       		var boxCoords = data.boxes
 

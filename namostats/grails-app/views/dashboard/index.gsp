@@ -58,7 +58,7 @@
                     <a href="http://localhost:8080/profile?userid=${c.userid}" class="profile-link">
                     <div class="row margin-2">
                         <h3>${c.username}</h3>
-                        <h4>${c.userid}</h4>
+                        <h4>@${c.userid}</h4>
                         ${c.content}
                     </div>
                     </a>
@@ -107,6 +107,7 @@
                           model="${[chartid:'main-wordcloud-chart', 'title':'Word Cloud']}"/>
             </div>
             <div class="col-md-6">
+            <!-- Map -->
             <h1><small>Where are Tweets coming from?<small></h1>
             <div>
                 <g:render template="google_map_chart"
