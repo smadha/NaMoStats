@@ -17,14 +17,12 @@
 <div class="container-fluid">
 <H3 class="twitter-jargons">Candidates</H3>
     <div class="content">
-      <div class="row">
+      <div class="row seven-cols">
         
          <g:each in="${solrService.getCandidates()}" var="c">
-        
-        
-    	
+
       <!-- Ele start --!>
-        <div class="profile profile-democrat col-lg-1">
+        <div class="profile profile-${c.party} col-lg-1 col-md-3 col-sm-4 col-xs-6 wrapper">
           <div class="row">
             <img src="${c.profileimgurl}"
             
@@ -34,7 +32,7 @@
             <h3>${c.username}</h3>
             ${c.content}
           </div>
-          <div class="row">
+          <div class="row bottom">
             <div class="col-md-6">
               <span class="twitter-jargons">Tweets</span><br />
               <b>${c.statusescount}</b>
@@ -49,7 +47,7 @@
         <!-- LOOP ele -->
         
         </g:each>
-        
+      </div>  
         <div class="row">
         	<div class="col-md-12">
         		<g:render template="timeline_chart"
@@ -57,7 +55,7 @@
     		</div>
         </div>
         
-      </div>
+      
     </div>
   </div>
     
