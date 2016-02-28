@@ -2,10 +2,14 @@ package namostats
 
 import grails.transaction.Transactional
 import groovy.util.logging.Log
+import namostats.model.PersonBean
 import namostats.model.PostBean
 import org.apache.solr.client.solrj.SolrQuery
+import org.apache.solr.client.solrj.SolrResponse
 import org.apache.solr.client.solrj.SolrServer
 import org.apache.solr.client.solrj.impl.HttpSolrServer
+import org.apache.solr.client.solrj.response.QueryResponse
+import org.apache.solr.client.solrj.util.ClientUtils
 
 import javax.annotation.PostConstruct
 import java.text.DateFormat
@@ -46,6 +50,31 @@ class SolrService implements Closeable {
 
     public searchPosts(SolrQuery query) {
         return postsServer.query(query)
+    }
+
+    public getCandidates(){
+        //FIXME: get real candidates
+        SolrQuery qry = new SolrQuery("type:profile")
+                .setRows(10)
+                .setSort("followerscount", SolrQuery.ORDER.desc)
+        QueryResponse res = postsServer.query(qry)
+        return res.getBeans(PersonBean.class)
+    }
+
+    public getCandidate(String candidateId){
+        log.info("Get Candidate $candidateId")
+        def qry = new SolrQuery("id:${ClientUtils.escapeQueryChars(candidateId)}")
+        QueryResponse res = postsServer.query(qry)
+        return  res.getResults().numFound >= 1 ? res.getBeans(PersonBean.class)[0] : null
+    }
+
+    def getTemporalTrend(Date from, Date to, String gap){
+        def qry = new SolrQuery("*:*")
+        qry.addDateRangeFacet('created', from, to, "+"+gap)
+        def resp = postsServer.query(qry)
+        return resp.getFacetRanges().get(0).counts.collect{ it ->
+            [value:it.value, count:it.count]
+        }
     }
 
     @Override
