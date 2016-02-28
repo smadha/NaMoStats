@@ -27,10 +27,8 @@ class RestController {
     def temporalstats(){
         Date from = params.from ? new Date(Long.parseLong(params.from.trim())) : new Date(1388534400000)
         Date to = params.to ? new Date(Long.parseLong(params.to.trim())) : new Date()
-        println from
-        println to
         def gap = params.gap ?: '1MONTH'
-        def res = solrService.getTemporalTrend(from, to, gap)
+        def res = solrService.getTemporalTrend(from, to, gap, params.mention)
         render ([result:res] as JSON)
     }
 

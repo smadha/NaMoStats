@@ -89,10 +89,13 @@ class SolrService implements Closeable {
         }
     }
 
-    def getTemporalTrend(Date from, Date to, String gap){
+    def getTemporalTrend(Date from, Date to, String gap, String mention){
         def qry = new SolrQuery("type:tweet")
         qry.setRows(0)
         qry.addDateRangeFacet('created', from, to, "+"+gap)
+        if (mention) {
+            qry.addFilterQuery("text:$mention OR connections:$mention")
+        }
         def resp = postsServer.query(qry)
         return resp.getFacetRanges().get(0).counts.collect{ it ->
             [value:it.value, count:it.count]
