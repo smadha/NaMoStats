@@ -1,13 +1,12 @@
 <span class="chart-container">
-    <svg id="${chartid}" class="chart">
 
+
+    <svg id="${chartid}" class="chart">
     </svg>
-    <span class="col-lg-4">
-        Start Date : <input id="startdate" class="datepicker" data-date-format="mm/dd/yyyy"  value="2014-01-01" onchange="onInputChange()">
-    </span>
     <span id="menubox" class="col-lg-4">
-        Trend for weapon:
+        Candidate's activity on twitter:
     </span>
+    <span id="desc"></span>
     <script>
         var margin = {top: 20, right: 80, bottom: 30, left: 50},
                 width = 960 - margin.left - margin.right,
@@ -58,15 +57,15 @@
                     .attr("dy", ".71em")
                     .style("text-anchor", "end")
                     .text("Activeness ");
-            var weapontrend = svg.selectAll(".weapontrend")
+            var canditrend = svg.selectAll(".canditrend")
                     .data(data)
                     .enter().append("g")
-                    .attr("class", "weaponname");
-            weapontrend.append("path")
+                    .attr("class", "candiname");
+            canditrend.append("path")
                     .attr("class", "line")
                     .attr("d", function(d) {return line(d.values);})
                     .style("stroke", function(d) { return color(d.name); });
-            weapontrend.append("text")
+            canditrend.append("text")
                     .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
                     .attr("transform", function(d) { console.log(d); return "translate(" + x(d.value.date) + "," + y(d.value.count) + ")"; })
                     .attr("x", 3)
@@ -75,17 +74,16 @@
         }
 
         function onInputChange(){
-            menu = d3.select("#weaponnameMenu")[0][0];
+            menu = d3.select("#candinameMenu")[0][0];
             if(!menu) {
                 return console.error("No menu");
             }
             opts = menu.selectedOptions;
-            weaponanmes = [];
+            candinames = [];
             for (i=0; i< opts.length; i++) {
-                weaponanmes.push(opts[i].value)
+                candinames.push(opts[i].value)
             }
-            startDate = dtStr = d3.select("#startdate")[0][0].value + "T00:00:00Z";
-            drawTrend(weaponanmes, startDate)
+            drawTrend(candinames)
         }
 
 
@@ -139,12 +137,12 @@
         var select  = d3.select("#menubox")
                 .append("select")
                 .attr('multiple', 'true')
-                .attr('id', 'weaponnameMenu')
+                .attr('id', 'candinameMenu')
                 .on("change", onInputChange),
                 options = select.selectAll('option').data(candidates); // Data join
         // Enter selection
         options.enter().append("option").text(function(d) { return d; });
-        drawTrend(candidates.slice(1, 3));
+        drawTrend(candidates);
 
     </script>
 </span>
