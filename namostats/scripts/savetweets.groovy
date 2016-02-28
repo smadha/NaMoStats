@@ -38,4 +38,5 @@ new File("decision2016-2.txt").withWriter {out ->
         q.setResultType(Query.ResultType.recent)
         Thread.sleep(2000)
     }
+
 }
