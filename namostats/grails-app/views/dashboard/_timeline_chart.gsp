@@ -64,10 +64,10 @@
                 .attr("class", "context")
                 .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-        d3.json("${ createLink([controller: 'rest', action: 'temporalstats']) }", function(err, data){
+        d3.json("${ createLink([controller: 'rest', action: 'temporalstats',params:[from:'1451635200000',gap:'1DAY']]) }", function(err, data){
             if (err) {throw err}
-            x.domain(d3.extent(data.result.map(function(d) { console.log(new Date(d.value).getTime()); return new Date(d.value).getTime(); })));
-            y.domain([0, d3.max(data.result.map(function(d) { console.log(d.count); return d.count; }))]);
+            x.domain(d3.extent(data.result.map(function(d) { return new Date(d.value).getTime(); })));
+            y.domain([0, d3.max(data.result.map(function(d) { return d.count; }))]);
             x2.domain(x.domain());
             y2.domain(y.domain());
 
