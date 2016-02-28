@@ -11,6 +11,7 @@ class DashboardController {
     def solrService
 
     def index() {
+        [solrService:solrService]
     }
 
     def twitter() {

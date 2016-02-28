@@ -13,3 +13,31 @@
 * = require mobile
 *= require_self
 */
+.profile{
+	height: 500px;
+}
+.profile-democrat {
+	background-color: rgba(255, 0, 0, 0.5);
+}
+.profile-republic {
+	background-color: rgba(0, 0, 255, 0.5);
+}
+
+.profile-image {
+	width: 90%;
+	height: 90%;
+	margin-top: 5%;
+	margin-left: 5%;
+}
+
+.margin-2 {
+	margin: 2px;
+}
+
+.twitter-jargons {
+	letter-spacing: .02em;
+	text-transform: uppercase;
+	text-align: center !important;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	text-decoration: underline;
+}
