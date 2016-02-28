@@ -164,6 +164,25 @@ class SolrService implements Closeable {
         }
     }
 
+    def getSentiments(userid, tag){
+        def qry = new SolrQuery("type:tweet")
+        if (userid) {
+            qry.addFilterQuery("userid:$userid OR connections:$userid")
+        }
+        if (tag) {
+            qry.addFilterQuery("tags:$tag")
+        }
+        qry.setRows(0)
+        qry.setFacet(true)
+        qry.addFacetField("sentiment")
+        println(qry)
+        def result = postsServer.query(qry)
+        result = result.getFacetField("sentiment")
+        return  result.values.collect {
+            [label:it.name, value:it.count]
+        }
+    }
+
     @Override
     void close() throws IOException {
         if(postsServer) {
