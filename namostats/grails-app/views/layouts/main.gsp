@@ -23,7 +23,7 @@
         	</div>
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="content" style="margin-top: 23px;">
+    <div class="content" style="margin-top: 52px;">
         <g:layoutBody/>
     </div>
 </div>

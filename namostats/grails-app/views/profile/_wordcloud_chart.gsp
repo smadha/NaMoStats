@@ -4,7 +4,7 @@
 $(function() {
 	
 	$.ajax({
-		'url' : "/rest/toptags",
+		'url' : "/rest/toptags?userid=${params.userid}",
 		'success' : function(data) {
 		
       	var word_array = []
