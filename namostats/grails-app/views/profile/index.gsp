@@ -32,7 +32,12 @@
         </div>
       </div>
     </div>
-
+    <div class="col-md-2"></div>
+    <div class="col-md-6">
+                <g:render template="senti_pie"
+                          model="${[chartid:'senti_pie', 'title':'senti_pie']}"/>
+    </div>
+    <div class="col-md-2"></div>
   </div>
 	<!-- Word Cloud -->
         <div class="row">
