@@ -1,5 +1,6 @@
 package io.hacktech.uscff;
 
+import com.gs.collections.impl.map.sorted.mutable.TreeSortedMap;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
@@ -27,6 +28,10 @@ import java.util.Properties;
  */
 public class NlpPipeline {
 
+    public static final String POS = "Positive";
+    public static final String NEG = "Negative";
+    public static final String NEU = "Neutral";
+    public static final String MIX = "Mixed";
     private StanfordCoreNLP tokenizer;
     private StanfordCoreNLP sentimentAnalyser;
     private CRFClassifier<CoreLabel> nerClassifier;
@@ -79,14 +84,57 @@ public class NlpPipeline {
         return sentiClasses;
     }
 
+    public String aggregatedSentiment(String text){
+        return aggregateSentiment(sentimentAnalyse(text));
+    }
+
+    public String aggregateSentiment(List<String> classes){
+        System.out.println(classes);
+        Map<String, Integer> counts = new TreeSortedMap<>();
+        for (String field: classes) {
+            counts.put(field, counts.getOrDefault(field, 0) + 1);
+        }
+        //if only one class ; then it is it
+        if (counts.size() == 1) {
+            return counts.keySet().iterator().next();
+        }
+        // Mostly mixed
+        // lets average
+        int count = 0;
+        for (String field : classes) {
+            switch (field){
+                case POS:
+                    count += 1;
+                    break;
+                case NEU:
+                    //nothing +0
+                    break;
+                case NEG:
+                    count -= 1;
+                    break;
+                default:
+                    throw new RuntimeException( field + " -- WTH ?");
+            }
+        }
+        double avg = 1.0 * count / counts.size();
+        if (avg < 0.50 && avg > -0.50){
+            /// mixed
+            return MIX;
+        } else if (avg >= 0.50){
+            return POS;
+        } else {
+            return NEG;
+        }
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //String tweet = "It was an honor to be the Grand Marshall- in the Salute to Israel Parade back in 2004";
-        String tweet = "Just watched lightweight Marco Rubio lying to a small crowd about my past record. He is not as smart as Cruz, and may be an even bigger liar";
+        String tweet = "This is fucking irritating. But I see some hope in it.";
         NlpPipeline pipeline = new NlpPipeline();
         System.out.println("NER");
         System.out.println(pipeline.ner(tweet));
         System.out.println("Sentiment");
-        System.out.println(pipeline.sentimentAnalyse(tweet));
+        System.out.println(pipeline.aggregatedSentiment(tweet));
     }
 
 }
