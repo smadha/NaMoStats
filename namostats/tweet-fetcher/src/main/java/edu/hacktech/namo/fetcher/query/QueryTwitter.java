@@ -53,8 +53,10 @@ public class QueryTwitter {
 		Query q = new Query(keyword);
 		q.setCount(100);
 		q.setSinceId(0);
-		q.setResultType(Query.ResultType.popular);
-		// q.setMaxId(700225107239833600l);
+		q.setResultType(Query.ResultType.recent);
+		//q.setMaxId(700225107239833600l);
+		//q.setMaxId(0);
+		
 		int count = 0;
 
 		while (true) {
@@ -66,7 +68,7 @@ public class QueryTwitter {
 				break;
 			}
 			// result.getRateLimitStatus();
-			int writeCount = 0;
+			
 			for (Status s : statuses) {
 				
 /*				if (s.getUser().getScreenName().trim().equals(tweeple)) {
@@ -80,7 +82,7 @@ public class QueryTwitter {
 				query.write(keyword+"-search" + ".json", TwitterObjectFactory.getRawJSON(s), true);
 				count++;
 			}
-			System.out.println("Written " + writeCount);
+			
 			System.out.println("Count = " + count);
 			RateLimitStatus rLimit = result.getRateLimitStatus();
 			System.out.println("Remaining " + rLimit.getRemaining() + ", resets in " + rLimit.getResetTimeInSeconds() + " Reset: "
@@ -187,9 +189,9 @@ public class QueryTwitter {
 		QueryTwitter query = new QueryTwitter();
 		// System.err.println(query.getProfile("HillaryClinton"));
 
-		String candidate = "JohnKasich";
+		String candidate = "CNNPolitics";
 		
-		query.getTweetsUsingSearch("@" + candidate);
+		query.getTweetsUsingSearch("@:" + candidate);
 		//query.storeTweetsFromProfile(candidate);
 	}
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>Rectangles</title>
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map {
+	height: 100%;
+}
+</style>
+<script>
+	//This example adds a red polygon to a map.
+
+	/* var arr = []
+	for (var i = 0; i < 4; i++) {
+		var obj = {}
+		obj['lng'] = a.place.bounding_box.coordinates[0][i][0]
+		obj['lat'] = a.place.bounding_box.coordinates[0][i][1]
+		arr.push(obj)
+	} */
+
+	function initMap() {
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom : 3,
+			center : {
+				lat : 33.678,
+				lng : -116.243
+			},
+			mapTypeId : google.maps.MapTypeId.TERRAIN
+		});
+
+		// Define the LatLng coordinates for the polygon's path.
+		var triangleCoords = [ [ {
+			lat : 25.774,
+			lng : -80.190
+		}, {
+			lat : 18.466,
+			lng : -66.118
+		}, {
+			lat : 32.321,
+			lng : -64.757
+		}, {
+			lat : 25.774,
+			lng : -80.190
+		} ], [ {
+			"lat" : 45.101902,
+			"lng" : -93.056248
+		}, {
+			"lat" : 45.101902,
+			"lng" : -92.980042
+		}, {
+			"lat" : 45.033056,
+			"lng" : -92.980042
+		}, {
+			"lat" : 45.033056,
+			"lng" : -93.056248
+		} ] ];
+
+		// Construct the polygon.
+		var bermudaTriangle = new google.maps.Polygon({
+			paths : triangleCoords,
+			strokeColor : '#FF0000',
+			strokeOpacity : 0.8,
+			strokeWeight : 2,
+			fillColor : '#FF0000',
+			fillOpacity : 0.35
+		});
+		bermudaTriangle.setMap(map);
+
+	}
+</script>
+</head>
+<body>
+  <div id="map"></div>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap">
+			/* key=YOUR_API_KEY&signed_in=true& */
+		</script>
+</body>
+</html>
