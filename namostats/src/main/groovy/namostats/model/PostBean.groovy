@@ -23,8 +23,22 @@ public class PostBean {
     @Field long numlikes
     @Field long numshares
     @Field long numcomments
-    @Field String location
     @Field boolean composed
+    @Field List<String> media
+    @Field List<String> symbols
+    @Field String inreplytostatusid
+    @Field String inreplytouserid
+    @Field List<String> location
+    @Field String country
+    @Field String countrycode
+    @Field String place
+    @Field String fullplacename
+    @Field String boundingboxpt1
+    @Field String boundingboxpt2
+    @Field String boundingboxpt3
+    @Field String boundingboxpt4
+    @Field String retweetedfrom
+    @Field String category
 
     @Field Date created
     @Field Date updated
