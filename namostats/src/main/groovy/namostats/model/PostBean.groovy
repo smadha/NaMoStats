@@ -39,6 +39,10 @@ public class PostBean {
     @Field String boundingboxpt4
     @Field String retweetedfrom
     @Field String category
+    @Field String sentiment
+    @Field List<String> ner_persons
+    @Field List<String> ner_organizations
+    @Field List<String> ner_locations
 
     @Field Date created
     @Field Date updated

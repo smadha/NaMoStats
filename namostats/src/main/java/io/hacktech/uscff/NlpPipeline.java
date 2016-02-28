@@ -10,16 +10,9 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.util.CoreMap;
 import edu.stanford.nlp.util.Generics;
 import edu.stanford.nlp.util.Triple;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by tg on 2/27/16.
@@ -51,7 +44,7 @@ public class NlpPipeline {
 
     public Map<String, List<String>> ner(String text) throws IOException, ClassNotFoundException {
         List<Triple<String, Integer, Integer>> nes = nerClassifier.classifyToCharacterOffsets(text);
-        Map<String, List<String>> result = new HashMap<>();
+        Map<String, List<String>> result = new HashMap<String, List<String>>();
         for (Triple<String, Integer, Integer> ne : nes) {
             if (!result.containsKey(ne.first)) {
                 result.put(ne.first, new ArrayList<>());
