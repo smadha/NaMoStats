@@ -22,9 +22,9 @@ import java.util.*;
 public class NlpPipeline {
 
     public static final String POS = "Positive";
-    public static final String VERY_POS = "Very Positive";
+    public static final String VERY_POS = "Very positive";
     public static final String NEG = "Negative";
-    public static final String VERY_NEG = "Very Negative";
+    public static final String VERY_NEG = "Very negative";
     public static final String NEU = "Neutral";
     public static final String MIX = "Mixed";
     private StanfordCoreNLP tokenizer;

@@ -11,6 +11,7 @@ import twitter4j.conf.ConfigurationBuilder
 class TwitterService {
 
     def solrService
+    NlpPipeline pipeline = new NlpPipeline()
 
     Twitter twitter = new TwitterFactory(
             new ConfigurationBuilder().setJSONStoreEnabled(true).build())
@@ -76,12 +77,15 @@ class TwitterService {
         else
             dict["category"] = "public"
 
+
         if(s.text != null && !s.text.isEmpty()) {
-            NlpPipeline pipeline = NlpPipeline();
             Map<String, List<String>> ner = pipeline.ner(s.text)
-            dict["ner_persons"] = ner.hasProperty("PERSON")?ner.get("PERSON"):null
-            dict["ner_organizations"] = ner.hasProperty("ORGANIZATION")?ner.get("ORGANIZATION"):null
-            dict["ner_locations"] = ner.hasProperty("LOCATION")?ner.get("LOCATION"):null
+            if (ner.hasProperty("PERSON"))
+                dict["ner_persons"] = ner.get("PERSON")
+            if (ner.hasProperty("ORGANIZATION"))
+                dict["ner_organizations"] = ner.get("ORGANIZATION")
+            if (ner.hasProperty("LOCATION"))
+                dict["ner_locations"] = ner.get("LOCATION")
 
             String sentiment = pipeline.aggregatedSentiment(s.text)
             dict["sentiment"] = (sentiment != null && !sentiment.isEmpty()) ? sentiment : null
