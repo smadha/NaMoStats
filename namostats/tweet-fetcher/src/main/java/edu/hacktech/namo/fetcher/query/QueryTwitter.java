@@ -101,6 +101,7 @@ public class QueryTwitter {
 	}
 
 	public void write(String fileName, String content, boolean isAppend) throws Exception {
+		content+="\n";
 		FileOutputStream out = new FileOutputStream(fileName, isAppend);
 		out.write(content.getBytes());
 		out.close();
@@ -186,7 +187,7 @@ public class QueryTwitter {
 		QueryTwitter query = new QueryTwitter();
 		// System.err.println(query.getProfile("HillaryClinton"));
 
-		String candidate = "SenSanders";
+		String candidate = "JohnKasich";
 		
 		query.getTweetsUsingSearch("@" + candidate);
 		//query.storeTweetsFromProfile(candidate);
