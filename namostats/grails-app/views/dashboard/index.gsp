@@ -33,11 +33,11 @@
             ${c.content}
           </div>
           <div class="row bottom">
-            <div class="col-md-6">
+            <div class="col-md-5">
               <span class="twitter-jargons">Tweets</span><br />
               <b>${c.statusescount}</b>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
               <span class="twitter-jargons">Followers</span><br />
               <b>${c.followerscount}</b>
             </div>

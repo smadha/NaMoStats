@@ -21,35 +21,7 @@
                 <a class="navbar-brand" href="#">Election 2016</a>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <g:if test="${'twitter'.equals(actionName)}">
-                        <li class='active'><a href="#">Twitter</a></li>
-                    </g:if><g:else>
-                    <li class=''><g:link action="twitter" controller="dashboard"> Twitter </g:link></li>
-                </g:else>
-                    <li><a href="#">More</a></li>
-                </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Thanks</a></li>
-                            <li><a href="#">About</a></li>
 
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Source Code</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
     <div class="content">
