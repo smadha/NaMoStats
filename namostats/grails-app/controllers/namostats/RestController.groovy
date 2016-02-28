@@ -69,4 +69,9 @@ class RestController {
         def boxes = solrService.getBoundingBox(userid, max)
         render([boxes:boxes, count:boxes.size()] as JSON)
     }
+
+    public sentiments(){
+        def sentiments = solrService.getSentiments(params.userid, params.tag)
+        render (sentiments as JSON)
+    }
 }
