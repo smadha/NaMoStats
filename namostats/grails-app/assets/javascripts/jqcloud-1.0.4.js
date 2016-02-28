@@ -113,7 +113,7 @@
         if (word.link) {
           // If link is a string, then use it as the link href
           if (typeof word.link === "string") {
-            word.link = {href: word.link};
+            word.link = {href: word.link,'target':'_blank'};
           }
 
           // Extend link html options with defaults
