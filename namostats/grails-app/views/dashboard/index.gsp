@@ -55,7 +55,7 @@
 
                              class="profile-image">
                     </div>
-                    <a href="http://localhost:8080/profile?userid=${c.userid}" class="profile-link">
+                    <a href="/profile?userid=${c.userid}" class="profile-link">
                     <div class="row margin-2">
                         <h3>${c.username}</h3>
                         <h4>@${c.userid}</h4>
