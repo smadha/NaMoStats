@@ -4,7 +4,7 @@
 $(function() {
 	
 	$.ajax({
-		'url' : "http://localhost:8080/rest/toptags",
+		'url' : "/rest/toptags",
 		'success' : function(data) {
 		
       	var word_array = []
