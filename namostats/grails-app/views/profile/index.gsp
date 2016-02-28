@@ -1,6 +1,10 @@
-<%-- Created by IntelliJ IDEA. User: tg Date: 2/28/16 Time: 7:22 AM --%> <%@ page
-contentType="text/html;charset=UTF-8" %>
-
+<%-- Created by IntelliJ IDEA. User: tg Date: 2/28/16 Time: 7:22 AM --%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
+<head>
+    <meta name="layout" content="main">
+    </head>
+<body>
 <asset:javascript src="application.js" />
 <asset:stylesheet src="application.css" />
 <link rel="stylesheet" type="text/css" href="/assets/jqcloud.css" />
@@ -26,7 +30,6 @@ contentType="text/html;charset=UTF-8" %>
           <span class="twitter-jargons">Followers</span><br /> <b class="number">${formatNumber(number:c.followerscount,
             locale: Locale.ENGLISH, format: '###,##0')}</b>
         </div>
-
       </div>
     </div>
 
@@ -48,3 +51,4 @@ contentType="text/html;charset=UTF-8" %>
             </div>
         </div>
 </div>
+</body>
