@@ -43,7 +43,6 @@ class RestController {
         render( tweets as JSON)
     }
 
-
     def datefacets(){
         try {
             def q = params.q?:"*:*"
@@ -63,6 +62,13 @@ class RestController {
             response.status = 400
             render ([msg:e.getMessage()] as JSON)
         }
+    }
 
+    public boundingbox(){
+        def userid = params.userid
+        //FIXME
+        def max = params.max?Integer.parseInt(params.max):25000
+        def boxes = solrService.getBoundingBox(userid, max)
+        render([boxes:boxes, count:boxes.size()] as JSON)
     }
 }

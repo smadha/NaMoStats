@@ -143,6 +143,24 @@ class SolrService implements Closeable {
         }
     }
 
+    public getBoundingBox(String userid, int max){
+        def qry =  new SolrQuery("type:tweet AND boundingboxpt1_0_coordinate:*")
+                .setRows(max)
+                .setFields("boundingboxpt1,boundingboxpt2,boundingboxpt3,boundingboxpt4")
+        if (userid) {
+           qry.setFilterQueries("userid:$userid OR connections:$userid")
+        }
+        QueryResponse resp = postsServer.query(qry)
+        return resp.results.collect {rec ->
+            def res = []
+            for(int i =1; i<=4; i++ ){
+                def parts = rec["boundingboxpt" + i].split(",")
+                res.add([lat:Double.parseDouble(parts[0].trim()), lng:Double.parseDouble(parts[1].trim())])
+            }
+            return res
+        }
+    }
+
     @Override
     void close() throws IOException {
         if(postsServer) {
