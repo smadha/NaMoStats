@@ -28,4 +28,6 @@ public class PersonBean {
     @Field Date updated
     @Field Date indexed
 
+    String party
+
 }

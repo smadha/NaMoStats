@@ -11,11 +11,20 @@ import twitter4j.conf.ConfigurationBuilder
 class TwitterService {
 
     def solrService
-    NlpPipeline pipeline = new NlpPipeline()
+    NlpPipeline pipeline
+    Twitter twitter
 
-    Twitter twitter = new TwitterFactory(
-            new ConfigurationBuilder().setJSONStoreEnabled(true).build())
-            .getInstance()
+    public TwitterService(){
+        try {
+            pipeline = new NlpPipeline()
+            twitter = new TwitterFactory(
+                    new ConfigurationBuilder().setJSONStoreEnabled(true).build())
+                    .getInstance()
+        } catch (Exception e){
+            throw new RuntimeException(e)
+        }
+
+    }
 
     /**
      * Gets user profile from twitter
@@ -76,8 +85,6 @@ class TwitterService {
             dict["category"] = "news"
         else
             dict["category"] = "public"
-
-
         if(s.text != null && !s.text.isEmpty()) {
             Map<String, List<String>> ner = pipeline.ner(s.text)
             if (ner.hasProperty("PERSON"))
@@ -90,7 +97,6 @@ class TwitterService {
             String sentiment = pipeline.aggregatedSentiment(s.text)
             dict["sentiment"] = (sentiment != null && !sentiment.isEmpty()) ? sentiment : null
         }
-
         return new PostBean(dict)
     }
 

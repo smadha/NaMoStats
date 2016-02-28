@@ -34,5 +34,12 @@ class RestController {
         render ([result:res] as JSON)
     }
 
+    def toptags(){
+        render(solrService.getTopTags(params.userid) as JSON)
+    }
 
+    def toptweets(){
+        def tweets = solrService.topTweets(params.userid, params.tag, params.start, params.rows, params.sortfield)
+        render( tweets as JSON)
+    }
 }

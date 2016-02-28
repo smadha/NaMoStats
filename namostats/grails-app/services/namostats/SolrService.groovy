@@ -5,7 +5,6 @@ import groovy.util.logging.Log
 import namostats.model.PersonBean
 import namostats.model.PostBean
 import org.apache.solr.client.solrj.SolrQuery
-import org.apache.solr.client.solrj.SolrResponse
 import org.apache.solr.client.solrj.SolrServer
 import org.apache.solr.client.solrj.impl.HttpSolrServer
 import org.apache.solr.client.solrj.response.QueryResponse
@@ -20,6 +19,17 @@ import java.text.SimpleDateFormat
 class SolrService implements Closeable {
 
     def static DateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    def static candidateQry = "userid:(SenSanders HillaryClinton realDonaldTrump tedcruz marcorubio JohnKasich RealBenCarson)"
+    def static Map party = [
+            SenSanders: 'republican',
+            HillaryClinton: 'republican',
+            realDonaldTrump: 'democratic',
+            tedcruz: 'democratic',
+            marcorubio: 'democratic',
+            JohnKasich: 'democratic',
+            RealBenCarson: 'democratic'
+    ]
+
     def grailsApplication
     SolrServer postsServer
     SolrServer usersServer
@@ -55,26 +65,72 @@ class SolrService implements Closeable {
     public getCandidates(){
         //FIXME: get real candidates
         SolrQuery qry = new SolrQuery("type:profile")
+                .setFilterQueries(candidateQry)
                 .setRows(10)
                 .setSort("followerscount", SolrQuery.ORDER.desc)
         QueryResponse res = postsServer.query(qry)
-        return res.getBeans(PersonBean.class)
+        def profiles = res.getBeans(PersonBean.class)
+        for (def prof in profiles){
+            prof['party'] = party[prof.userid]
+        }
+        return profiles
     }
 
     public getCandidate(String candidateId){
         log.info("Get Candidate $candidateId")
-        def qry = new SolrQuery("id:${ClientUtils.escapeQueryChars(candidateId)}")
+        def qry = new SolrQuery("userid:${ClientUtils.escapeQueryChars(candidateId)}")
         QueryResponse res = postsServer.query(qry)
-        return  res.getResults().numFound >= 1 ? res.getBeans(PersonBean.class)[0] : null
+        if (res.getResults().numFound >= 1) {
+            def prof = res.getBeans(PersonBean.class)[0]
+            prof['party'] = party[prof.userid]
+            return prof
+        } else {
+            return null
+        }
     }
 
     def getTemporalTrend(Date from, Date to, String gap){
-        def qry = new SolrQuery("*:*")
+        def qry = new SolrQuery("type:tweet")
+        qry.setRows(0)
         qry.addDateRangeFacet('created', from, to, "+"+gap)
         def resp = postsServer.query(qry)
         return resp.getFacetRanges().get(0).counts.collect{ it ->
             [value:it.value, count:it.count]
         }
+    }
+
+    def getTopTags(def userid){
+        def qry = new SolrQuery("type:tweet")
+        qry.setRows(0)
+        if(userid){
+            qry.addFilterQuery("userid:${ClientUtils.escapeQueryChars(userid)}")
+        }
+        qry.setFacet(true)
+        qry.addFacetField("tags")
+        qry.setFacetMinCount(1)
+        qry.setFacetLimit(100)
+        print("Qry:" + qry)
+        def resp = postsServer.query(qry)
+        return  resp.getFacetField("tags").values.collect{ it -> [name:it.name, count:it.count]        }
+    }
+
+    def topTweets(def userid, def tag, def start, def rows, def sort){
+        def qry = new SolrQuery("type:tweet")
+        if (userid){
+            qry.addFilterQuery("userid:" + ClientUtils.escapeQueryChars(userid))
+        }
+        if (tag){
+            qry.addFilterQuery("tags:" + ClientUtils.escapeQueryChars(tag))
+        }
+        if (start){
+            qry.setStart(Integer.parseInt(start))
+        }
+        if (rows) {
+            qry.setRows(Integer.parseInt(rows))
+        }
+        qry.setSort(SolrQuery.SortClause.desc(sort?:"numshares"))
+        def res = postsServer.query(qry)
+        return res.getBeans(PostBean.class)
     }
 
     @Override
